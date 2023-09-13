@@ -7,33 +7,37 @@
     <style>
         body {
             background-color: #ffc0cb;
+            font-family: 'Segoe UI', sans-serif;
         }
         form {
             background-color: #9370db;
             padding: 20px;
             border-radius: 10px;
-            width: 300px;
+            width: 400px;
             margin: 0 auto;
         }
         label {
             display: block;
             color: #ffec40;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
+            font-size: 18px;
         }
         input[type="text"], input[type="file"], select {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
+            padding: 12px;
+            margin-bottom: 15px;
             border-radius: 5px;
             border: none;
+            font-size: 16px;
         }
         input[type="submit"] {
             background-color: #ffec40;
             color: #9370db;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 18px;
         }
     </style>
 </head>
@@ -82,13 +86,27 @@
             <label for="altDurumBilgisiDamacana2">Damacana Durumu</label>
             <select id="altDurumBilgisiDamacana2" name="altDurumBilgisiDamacana2">
                 <option value="" disabled selected>Damacana Durumunu Seçiniz</option>
-                <option value="teslim">Damacana Teslim Edildi</option>
-                <option value="noTeslim">Damacana Teslim Edilmedi</option>
-                <option value="dolu">Damacana Dolu</option>
-                <option value="bos">Damacana Boş</option>
+                <option value="teslim">Teslim Edildi</option>
+                <option value="noTeslim">Teslim Edilmedi</option>
             </select>
-            <label for="damacanaAdet">Damacana Adet:</label>
-            <input type="number" id="damacanaAdet" name="damacanaAdet" min="0" max="999999" placeholder="Damacana Adet Sayısı" required>
+        </div>
+
+        <div id="altDurumBilgisiYemek1" style="display: none;">
+            <label for="altDurumBilgisiYemek2">Yemek Durumu</label>
+            <select id="altDurumBilgisiYemek2" name="altDurumBilgisiYemek2">
+                <option value="" disabled selected>Yemek Durumunu Seçiniz</option>
+                <option value="teslim">Teslim Edildi</option>
+                <option value="noTeslim">Teslim Edilmedi</option>
+            </select>
+        </div>
+
+        <div id="altDurumBilgisiGorevli1" style="display: none;">
+            <label for="altDurumBilgisiGorevli2">Görevli Durumu</label>
+            <select id="altDurumBilgisiGorevli2" name="altDurumBilgisiGorevli2">
+                <option value="" disabled selected>Görevli Durumunu Seçiniz</option>
+                <option value="teslim">Teslim Edildi</option>
+                <option value="noTeslim">Teslim Edilmedi</option>
+            </select>
         </div>
     <!-- ********************************************************************* -->  
 
@@ -99,11 +117,17 @@
             <input type="number" id="saatDakika" name="saatDakika" min="0" max="59" placeholder="Dakika" required>
         </div>
 
-        <label for="adet">ANOTHER Adet:</label>
+        <!-- ********************************************************************* -->
+
+        <label for="adet">Adet:</label>
         <input type="number" id="adet" name="adet" min="0" max="999999" placeholder="Adet Sayısı" required>
+
+        <!-- ********************************************************************* -->
 
         <label for="resim">Resim Yükle:</label>
         <input type="file" id="resim" name="resim" accept="image/*" required>
+
+        <!-- ********************************************************************* -->
 
         <input type="submit" value="Gönder">
     </form>
@@ -161,25 +185,77 @@
             altDurumBilgisiDamacana1Div.style.display = 'none';
         }
     });
+
+    document.getElementById('durumBilgisi').addEventListener('change', function () {
+        var altDurumBilgisiYemek1Div = document.getElementById('altDurumBilgisiYemek1');
+        if (this.value === 'yemekInfo') {
+            altDurumBilgisiYemek1Div.style.display = 'block';
+        } else {
+            altDurumBilgisiYemek1Div.style.display = 'none';
+        }
+    });
+
+    document.getElementById('durumBilgisi').addEventListener('change', function () {
+        var altDurumBilgisiGorevli1Div = document.getElementById('altDurumBilgisiGorevli1');
+        if (this.value === 'GorevliInfo') {
+            altDurumBilgisiGorevli1Div.style.display = 'block';
+        } else {
+            altDurumBilgisiGorevli1Div.style.display = 'none';
+        }
+    });
 </script>
 
 <script>
     document.getElementById('durumBilgisi').addEventListener('change', function () {
         var altDurumBilgisiDamacana1Div = document.getElementById('altDurumBilgisiDamacana1');
         var altDurumBilgisiDamacana2Select = document.getElementById('altDurumBilgisiDamacana2');
-        var damacanaAdetInput = document.getElementById('damacanaAdet');
+
 
         if (this.value === 'damacanaInfo') {
             altDurumBilgisiDamacana1Div.style.display = 'block';
             altDurumBilgisiDamacana2Select.disabled = false;
-            damacanaAdetInput.disabled = false;
+
         } else {
             altDurumBilgisiDamacana1Div.style.display = 'none';
             altDurumBilgisiDamacana2Select.disabled = true;
-            damacanaAdetInput.disabled = true;
+            
+        }
+    });
+
+    document.getElementById('durumBilgisi').addEventListener('change', function () {
+        var altDurumBilgisiYemek1Div = document.getElementById('altDurumBilgisiYemek1');
+        var altDurumBilgisiYemek2Select = document.getElementById('altDurumBilgisiYemek2');
+
+
+        if (this.value === 'yemekInfo') {
+            altDurumBilgisiYemek1Div.style.display = 'block';
+            altDurumBilgisiYemek2Select.disabled = false;
+
+        } else {
+            altDurumBilgisiYemek1Div.style.display = 'none';
+            altDurumBilgisiYemek2Select.disabled = true;
+            
+        }
+    });
+
+    document.getElementById('durumBilgisi').addEventListener('change', function () {
+        var altDurumBilgisiGorevli1Div = document.getElementById('altDurumBilgisiGorevli1');
+        var altDurumBilgisiGorevli2Select = document.getElementById('altDurumBilgisiGorevli2');
+
+
+        if (this.value === 'gorevliInfo') {
+            altDurumBilgisiGorevli1Div.style.display = 'block';
+            altDurumBilgisiGorevli2Select.disabled = false;
+
+        } else {
+            altDurumBilgisiGorevli1Div.style.display = 'none';
+            altDurumBilgisiGorevli2Select.disabled = true;
+            
         }
     });
 </script>
+
+
 
 
 </body>

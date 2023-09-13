@@ -77,7 +77,6 @@ $result = $conn->query($sql);
             <th>Yer</th>
             <th>Durum Bilgisi</th>
             <th>Alt Durum Bilgisi</th>
-            <th>Damacana Sayısı</th>
             <th>Saat</th>
             <th>Adet</th>
             <th>Resim</th>
@@ -91,7 +90,6 @@ $result = $conn->query($sql);
                 echo "<td>" . $row['yer'] . "</td>";
                 echo "<td>" . $row['durumBilgisi'] . "</td>";
                 echo "<td>" . $row['altDurumBilgisi'] . "</td>";
-                echo "<td>" . $row['damacanaAdet'] . "</td>";
                 echo "<td>" . $row['saatSaat'] . ":" . $row['saatDakika'] . "</td>";
                 echo "<td>" . $row['adet'] . "</td>";
                 echo "<td>" . $row['resim'] . "</td>";

@@ -13,26 +13,34 @@ if ($conn->connect_error) {
     die("Bağlantı hatası: " . $conn->connect_error);
 }
 
+// Resim yükleme işlemi
+if (isset($_FILES["resim"])) {
+    $resimDosyasi = $_FILES["resim"]["tmp_name"];
+    $resimAdi = $_FILES["resim"]["name"];
+
+    // Resimleri kaydetmek için hedef klasör
+    $hedefKlasor = "D:\xampp\htdocs\t3vakfi\resimler";
+
+    
+}
+
 // Formdan gelen verileri alın
 $krizDurumu = $_POST['krizDurumu'];
-$altKrizDurumu = isset($_POST['altKrizDurumu']) ? $_POST['altKrizDurumu'] : null;
+$altKrizDurumu = isset($_POST['altKrizDurumu']) ? $_POST['altKrizDurumu'] : "-";
 $yer = $_POST['yer'];
 $durumBilgisi = $_POST['durumBilgisi'];
 $altDurumBilgisi = isset($_POST['altDurumBilgisi']) ? $_POST['altDurumBilgisi'] : "-";
-
-$damacanaAdet = isset($_POST['damacanaAdet']) ? $_POST['damacanaAdet'] : "-";
-
-
 $saatSaat = isset($_POST['saatSaat']) ? $_POST['saatSaat'] : null;
 $saatDakika = isset($_POST['saatDakika']) ? $_POST['saatDakika'] : null;
 $adet = $_POST['adet'];
 $resim = file_get_contents($_FILES['resim']['tmp_name']);
 
 // SQL sorgusunu oluşturun ve verileri tabloya ekleyin
-$sql = "INSERT INTO firma (krizDurumu, altKrizDurumu, yer, durumBilgisi, altDurumBilgisi, damacanaAdet, saatSaat, saatDakika, adet, resim) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO firma (krizDurumu, altKrizDurumu, yer, durumBilgisi, altDurumBilgisi,saatSaat, saatDakika, adet, resim) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("sssssisiii", $krizDurumu, $altKrizDurumu, $yer, $durumBilgisi, $altDurumBilgisi, $damacanaAdet, $saatSaat, $saatDakika, $adet, $resim);
+$stmt->bind_param("ssssssiii", $krizDurumu, $altKrizDurumu, $yer, $durumBilgisi, $altDurumBilgisi, $saatSaat, $saatDakika, $adet, $resim);
+
 
 if ($stmt->execute()) {
     echo "Veri başarıyla kaydedildi.";
