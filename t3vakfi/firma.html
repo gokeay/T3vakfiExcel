@@ -45,6 +45,8 @@
     <form enctype="multipart/form-data" method="POST" action="veri_kaydet.php">
 
         <!-- ********************************************************************* -->
+
+        
         <label for="krizDurumu">Kriz Var Mı?</label>
         <select id="krizDurumu" name="krizDurumu">
             <option value="" disabled selected>Kriz Durumunu Seçiniz</option>
@@ -124,8 +126,10 @@
 
         <!-- ********************************************************************* -->
 
-        <label for="resim">Resim Yükle:</label>
-        <input type="file" id="resim" name="resim" accept="image/*" required>
+        <label for="resim">Resim Seçin:</label>
+        <input type="file" id="resim" name="resim" accept="image/*" required><br><br>
+
+        <input type="hidden" name="kullaniciID" value="<?php echo isset($_SESSION['kullaniciID']) ? $_SESSION['kullaniciID'] : ''; ?>">
 
         <!-- ********************************************************************* -->
 

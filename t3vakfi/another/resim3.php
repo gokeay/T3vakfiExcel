@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 // Verileri SQL sorgusu ile veritabanından alın
-$sql = "SELECT * FROM firma";
+$sql = "SELECT * FROM resim";
 $result = $conn->query($sql);
 ?>
 
@@ -23,7 +23,7 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firma Verileri İncele</title>
+    <title>Resim Verilerini İncele</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -72,28 +72,14 @@ $result = $conn->query($sql);
     <h1>Verileri İncele</h1>
     <table>
         <tr>
-            <th>Kullanıcı ID</th>
-            <th>Kriz Durumu</th>
-            <th>Kriz Derecesi</th>
-            <th>Yer</th>
-            <th>Durum Bilgisi</th>
-            <th>Alt Durum Bilgisi</th>
-            <th>Saat</th>
-            <th>Adet</th>
+            <th>İsim</th>
             <th>Resim</th>
         </tr>
         <?php
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
-                echo "<td>" . $row['kullaniciID'] . "</td>";
-                echo "<td>" . $row['krizDurumu'] . "</td>";
-                echo "<td>" . $row['altKrizDurumu'] . "</td>";
-                echo "<td>" . $row['yer'] . "</td>";
-                echo "<td>" . $row['durumBilgisi'] . "</td>";
-                echo "<td>" . $row['altDurumBilgisi'] . "</td>";
-                echo "<td>" . $row['saatSaat'] . ":" . $row['saatDakika'] . "</td>";
-                echo "<td>" . $row['adet'] . "</td>";
+                echo "<td>" . $row['isim'] . "</td>";
                 echo "<td><a href='" . $row['resim'] . "'>" . $row['resim'] . "</a></td>";
                 echo "</tr>";
             }
