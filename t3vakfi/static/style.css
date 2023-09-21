@@ -1,0 +1,75 @@
+body {
+    background-color: #00CED1;
+    font-family: Arial, sans-serif;
+}
+#textBox {
+    border: 1px solid #ccc; /* Rengi ve kalınlığı ayarlayabilirsiniz */
+}
+#saatSecici input {
+    margin-right: 10px; /* İsteğe bağlı: Kutular arasında bir boşluk bırakmak için */
+}
+#damacanaBilgiKutusu {
+    border: 1px solid #ccc; /* Kenarlık rengi ve kalınlığı */
+    padding: 5px; /* Kenarlık ile içerik arasındaki boşluk */
+}
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.radio-group input, .select-group select {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+label {
+    display: block;
+    color: #FF69B4;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+input[type="text"], input[type="file"], select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+}
+input[type="submit"] {
+    background-color: #ffec40;
+    color: #9370db;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+h2 {
+    color: #FF69B4; /* Hot Pink */
+}
+h4 {
+    color: #FF69B4;
+}
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
