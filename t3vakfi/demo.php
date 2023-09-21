@@ -1,4 +1,12 @@
 <?php
+session_start();
+
+// Kullanıcı oturum kontrolü
+if (!isset($_SESSION['kullaniciID'])) {
+    header("Location: /t3vakfi/another/giris.html");
+    exit;
+}
+
 // Veritabanı bağlantısı
 $serverName = "localhost";
 $username = "root";

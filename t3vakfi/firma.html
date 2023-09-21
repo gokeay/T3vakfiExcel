@@ -1,266 +1,807 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mor-Sarı Form</title>
-    <style>
-        body {
-            background-color: #ffc0cb;
-            font-family: 'Segoe UI', sans-serif;
+<html lang="tr">
+    <head>    
+        <title>Form</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="../../static/style.css">
+
+        <style>body {
+            background-color: #00CED1; /* Turquoise */
+            font-family: Arial, sans-serif;
         }
-        form {
-            background-color: #9370db;
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
             padding: 20px;
             border-radius: 10px;
-            width: 400px;
-            margin: 0 auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        label {
+        
+        h2 {
+            color: #FF69B4; /* Hot Pink */
+        }
+        
+        .radio-group, .select-group {
+            margin-bottom: 20px;
+        }
+        
+        .radio-group label {
             display: block;
-            color: #ffec40;
             margin-bottom: 10px;
-            font-size: 18px;
         }
-        input[type="text"], input[type="file"], select {
+        
+        .radio-group input, .select-group select, input[type="file"], input[type="number"] {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            border: none;
-            font-size: 16px;
         }
-        input[type="submit"] {
-            background-color: #ffec40;
-            color: #9370db;
-            padding: 12px 24px;
+        
+        button {
+            padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 18px;
+            color: #ffffff;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-    </style>
-</head>
-<body>
-    <form enctype="multipart/form-data" method="POST" action="veri_kaydet.php">
-
-        <!-- ********************************************************************* -->
-
         
-        <label for="krizDurumu">Kriz Var Mı?</label>
-        <select id="krizDurumu" name="krizDurumu">
-            <option value="" disabled selected>Kriz Durumunu Seçiniz</option>
-            <option value="yok">Yok</option>
-            <option value="var">Var</option>
-        </select>
-
-        <div id="altSecenekler" style="display: none;">
-            <label for="altKrizDurumu">Kriz Büyüklüğü</label>
-            <select id="altKrizDurumu" name="altKrizDurumu">
-                <option value="" disabled selected>Kriz Büyüklüğünü Seçiniz</option>
-                <option value="normal">Normal</option>
-                <option value="orta">Orta</option>
-                <option value="büyük">Büyük</option>
-            </select>
-        </div>
-        <!-- ********************************************************************* -->
-      
-
-        <label for="yer">Yer:</label>
-        <select id="yer" name="yer">
-            <option value="" disabled selected>Yer seçiniz</option>
-            <option value="1.Yer">1.Yer</option>
-            <option value="2.Yer">2.Yer</option>
-            <option value="3.Yer">3.Yer</option>
-        </select>
-
+        .pink-button {
+            background-color: #FF69B4; /* Hot Pink */
+        }
         
-        <!-- ********************************************************************* -->
-        <label for="durumBilgisi">Durum Seçin</label>
-        <select id="durumBilgisi" name="durumBilgisi">
-            <option value="" disabled selected>Durum seçiniz</option>
-            <option value="damacanaInfo">Damacana Bilgisi</option>
-            <option value="yemekInfo">Yemek Bilgisi</option>
-            <option value="gorevliInfo">Görevli Bilgisi</option>
-        </select>
+        .pink-button:hover {
+            background-color: #FF1493; /* Deep Pink */
+        }
+        </style>
+    </head>
+
+    <body>
+
+        <form enctype="multipart/form-data" method="POST" action="veri_kaydet.php">
+
+        <div class="container text-center">
+            <h3>Teknofest Veri Portalı</h3>
+        </div>
+
+        <br>
+
+        <div class="container">
+            <button id="krizButton" type="button" class="btn btn-success btn-lg">Sorun var</button>
+
+            <br>
+            <br>
+
+            <div id="hiddenContent" class="mt-3 d-none">
+                <input type="text" class="form-control mb-2" id="textBox" placeholder="Buraya yazınız...">
+                <button type="button" class="btn btn-primary float-right" id="sendButton">İlet</button>
+            </div>
+
+            <div id = krizAlert class="alert alert-success alert-dismissible fade show" style="display: none;">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <strong>Success!</strong> Kriz Feyza ve Arzum'a iletildi, her şey yolunda!
+            </div>
+        </div>
+
+        <br>
+
+        <div class="container">
+
+            <!-- SAAT -->
+            <form id="form1">
+                <h2>Saat Bilgisi (format: 19.35)</h2>
+                <input type="number" name="saat" min="0" max="23">
+            </form>
+
+            <br>
+
+            <!-- KONUM -->
+            <form id="form2">
+                <h2>Yer Bilgisi:</h2>
+                <div class="select-group">
+                    <select name="yerBilgisi" >
+                        <option value="alanSecimi">Yer Bilgisi seçiniz</option>
+                        <option value="yarismaCadiri1">Turizm Teknolojileri Çadırı</option>
+                        <option value="yarismaCadiri2">Çevre, Enerji ve İklim Çadırı</option>
+                        <option value="yarismaCadiri3">Engelsiz Yaşam Çadırı</option>
+                        <option value="yarismaCadiri4">Sağlık ve İyi Yaşam Çadırı</option>
+                        <option value="VIP">VIP</option>
+                        <option value="spoterKule">Spoter Kule</option>
+                        <option value="TSK">TSK</option>
+                    </select>
+                </div>
+            </form>
+
+            <!-- CATERİNG -->
+            <form id="form3" style="display:none;">
+                <h2>Catering Bilgisi:</h2>
+
+                <!-- <ul class="list-group list-group-horizontal">
+                    <div class="input-group mb-3">
+                        <div class="input-group-text">
+                          <input type="checkbox">
+                        </div>
+                        <input type="text" class="form-control" placeholder="Mevcut">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-text">
+                          <input type="checkbox">
+                        </div>
+                        <input type="text" class="form-control" placeholder="Yeni geldi">
+                    </div>
+                </ul> -->
+                <h4>İkramlık:</h4>
+
+                <ul class="list-group list-group-horizontal">
+                    <ul class="list-group list-group-vertical">
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="radio3" name="ikramlikDurum" value="option2">Teslimat geldi
+                            <label class="form-check-label" for="radio3"></label>
+                        </div>
+                        <div class="form-control">
+                            <select id="secilenDegerIkramlikTeslim" name="ikramlikBilgisi" style="display:none;" >
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                                <option value="32">32</option>
+                                <option value="33">33</option>
+                                <option value="34">34</option>
+                                <option value="35">35</option>
+                                <option value="36">36</option>
+                                <option value="37">37</option>
+                                <option value="38">38</option>
+                                <option value="39">39</option>
+                                <option value="40">40</option>
+                                <option value="41">41</option>
+                                <option value="42">42</option>
+                                <option value="43">43</option>
+                                <option value="44">44</option>
+                                <option value="45">45</option>
+                                <option value="46">46</option>
+                                <option value="47">47</option>
+                                <option value="48">48</option>
+                                <option value="49">49</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                    </ul>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="radio1" name="ikramlikDurum" value="option1">Mevcut
+                        <label class="form-check-label" for="radio1"></label>
+                    </div>
+                    <div class="mx-2"></div>
+
+                    <ul class="list-group list-group-vertical">
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="radio2" name="ikramlikDurum" value="option2">Bitti
+                            <label class="form-check-label" for="radio2"></label>
+                        </div>
+                        <div class="form-control">
+                            <select id="secilenDegerIkramlikBitti" name="yerBilgisi" style="display:none;" >
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                                <option value="32">32</option>
+                                <option value="33">33</option>
+                                <option value="34">34</option>
+                                <option value="35">35</option>
+                                <option value="36">36</option>
+                                <option value="37">37</option>
+                                <option value="38">38</option>
+                                <option value="39">39</option>
+                                <option value="40">40</option>
+                                <option value="41">41</option>
+                                <option value="42">42</option>
+                                <option value="43">43</option>
+                                <option value="44">44</option>
+                                <option value="45">45</option>
+                                <option value="46">46</option>
+                                <option value="47">47</option>
+                                <option value="48">48</option>
+                                <option value="49">49</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                    </ul>
+                </ul>
+
+                <br>
+
+                <h4>İçecek:</h4>
+                <ul class="list-group list-group-horizontal">
+                    <h6>Çay:</h6>
+                    <div class="mx-2"></div>
+                    <div class="mx-2"></div>
+                    <div class="mx-2"></div>
+                    <div class="mx-2"></div>
+                    <div class="mx-2"></div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="radioCay1" name="cayDurum" value="option1">Mevcut
+                        <label class="form-check-label" for="radioCay1"></label>
+                    </div>
+                    <div class="mx-2"></div>
+                    <div class="mx-2"></div>
+                    <ul class="list-group list-group-vertical">
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="radioCay2" name="cayDurum" value="option2">Bitti
+                            <label class="form-check-label" for="radioCay2"></label>
+                        </div>
+                        <div class="form-control">
+                            <select id="secilenDegerCayBitti" name="yerBilgisi" style="display:none;" >
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                                <option value="32">32</option>
+                                <option value="33">33</option>
+                                <option value="34">34</option>
+                                <option value="35">35</option>
+                                <option value="36">36</option>
+                                <option value="37">37</option>
+                                <option value="38">38</option>
+                                <option value="39">39</option>
+                                <option value="40">40</option>
+                                <option value="41">41</option>
+                                <option value="42">42</option>
+                                <option value="43">43</option>
+                                <option value="44">44</option>
+                                <option value="45">45</option>
+                                <option value="46">46</option>
+                                <option value="47">47</option>
+                                <option value="48">48</option>
+                                <option value="49">49</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                    </ul>
+                </ul>
+
+                <ul class="list-group list-group-horizontal">
+                    <h6>Kahve:</h6>
+                    <div class="mx-2"></div>
+                    <div class="mx-2"></div>
+                    <div class="mx-2"></div>
+                    <div class="mx-2"></div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="radioKahve1" name="kahvekDurum" value="option1">Mevcut
+                        <label class="form-check-label" for="radioKahve1"></label>
+                    </div>
+                    <div class="mx-2"></div>
+                    <div class="mx-2"></div>
+                    <ul class="list-group list-group-vertical">
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="radioKahve2" name="kahveDurum" value="option2">Bitti
+                            <label class="form-check-label" for="radioKahve2"></label>
+                        </div>
+                        <div class="form-control">
+                            <select id="secilenDegerKahveBitti" name="yerBilgisi" style="display:none;" >
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                                <option value="32">32</option>
+                                <option value="33">33</option>
+                                <option value="34">34</option>
+                                <option value="35">35</option>
+                                <option value="36">36</option>
+                                <option value="37">37</option>
+                                <option value="38">38</option>
+                                <option value="39">39</option>
+                                <option value="40">40</option>
+                                <option value="41">41</option>
+                                <option value="42">42</option>
+                                <option value="43">43</option>
+                                <option value="44">44</option>
+                                <option value="45">45</option>
+                                <option value="46">46</option>
+                                <option value="47">47</option>
+                                <option value="48">48</option>
+                                <option value="49">49</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                    </ul>
+                </ul>
+
+                <ul class="list-group list-group-horizontal">
+                    <h6>Soğuk İçecek:</h6>
+                    <div class="mx-2"></div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="radioSoguk1" name="sogukDurum" value="option1">Mevcut
+                        <label class="form-check-label" for="radioSoguk1"></label>
+                    </div>
+                    <div class="mx-2"></div>
+
+                    <div class="mx-2"></div>
+
+                    <ul class="list-group list-group-vertical">
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="radioSoguk2" name="sogukDurum" value="option2">Bitti
+                            <label class="form-check-label" for="radioSoguk2"></label>
+                        </div>
+                        <div class="form-control">
+                            <select id="secilenDegerSogukBitti" name="yerBilgisi" style="display:none;" >
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                                <option value="32">32</option>
+                                <option value="33">33</option>
+                                <option value="34">34</option>
+                                <option value="35">35</option>
+                                <option value="36">36</option>
+                                <option value="37">37</option>
+                                <option value="38">38</option>
+                                <option value="39">39</option>
+                                <option value="40">40</option>
+                                <option value="41">41</option>
+                                <option value="42">42</option>
+                                <option value="43">43</option>
+                                <option value="44">44</option>
+                                <option value="45">45</option>
+                                <option value="46">46</option>
+                                <option value="47">47</option>
+                                <option value="48">48</option>
+                                <option value="49">49</option>
+                                <option value="50">50</option>
+                            </select>
+                        </div>
+                    </ul>
+                </ul>
+
+                <div>
+                    <input type="number" class="form-control" placeholder="Garson sayısı gir">
+                </div>
+
+                <br>
+
+                <div class="btn-group" role="group">
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">09.00 kontrolü
+                        <label class="form-check-label" for="radio2"></label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">14.00 kontrolü
+                        <label class="form-check-label" for="radio2"></label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">bilgilendirme
+                        <label class="form-check-label" for="radio2"></label>
+                    </div>
+                </div>
+
+                <input type="file" name="foto" accept="image/*">
+            </form>
+
+
+            <!-- DAMACANA -->
+            <form id="form4" style="display:none;">
+                <h2>Damacana Bilgisi:</h2>
+                <div class="select-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Teslim alınan damacana sayısı">
+                        <span class="input-group-text">Adet</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Talep edilen damacana sayısı">
+                        <span class="input-group-text">Adet</span>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Dolu damacana sayısı">
+                    <span class="input-group-text">Adet</span>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Boş damacana sayısı">
+                    <span class="input-group-text">Adet</span>
+                </div>
+
+                <input type="file" name="foto" accept="image/*">
+            </form>
+
+            <br>
+            <br>
+
+            <!-- <form id="form5" style="display:none;">
+                <h2>Coffee Break Bilgisi:</h2>
+                <div class="select-group">
+                    <select name="cBreakBilgisi">
+                        <option value="cBreakDurumSecimi">Durum seç</option>
+                        <option value="cBreakTeslimatBilgisi">Teslimat Geldi</option>
+                        <option value="cBreakTalepBilgisi">Talep</option>
+                    </select>
+                    <input type="text" class="form-control" placeholder="Adet gir">
+                </div>
+                <input type="file" name="foto" accept="image/*">
+            </form> -->
+
+            <button id="gonderButton" type="button" class="btn btn-primary" disabled>GÖNDER</button>
+
+            <div id = successAlert class="alert alert-success alert-dismissible fade show" style="display: none;">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <strong>Success!</strong> Girdiğiniz veriler sisteme iletildi.
+            </div>
+
+        </div>
+
+        <script>document.addEventListener("DOMContentLoaded", function() {
+            const form1 = document.getElementById("form1");
+            const form2 = document.getElementById("form2");
+            const form3 = document.getElementById("form3");
+            const form4 = document.getElementById("form4");
+            // const form5 = document.getElementById("form5");
+            // const form6 = document.getElementById("form6");
+            const gonderButton = document.getElementById("gonderButton");
+            // const krizButton = document.getElementById("krizButton");
+            // const krizButton1 = document.getElementById("krizButton1");
+            // const krizButton2 = document.getElementById("krizButton2");
+            // const krizButton3 = document.getElementById("krizButton3");
+            const sendButton = document.getElementById("sendButton");
         
-        <div id="altDurumBilgisiDamacana1" style="display: none;">
-            <label for="altDurumBilgisiDamacana2">Damacana Durumu</label>
-            <select id="altDurumBilgisiDamacana2" name="altDurumBilgisiDamacana2">
-                <option value="" disabled selected>Damacana Durumunu Seçiniz</option>
-                <option value="teslim">Teslim Edildi</option>
-                <option value="noTeslim">Teslim Edilmedi</option>
-            </select>
-        </div>
-
-        <div id="altDurumBilgisiYemek1" style="display: none;">
-            <label for="altDurumBilgisiYemek2">Yemek Durumu</label>
-            <select id="altDurumBilgisiYemek2" name="altDurumBilgisiYemek2">
-                <option value="" disabled selected>Yemek Durumunu Seçiniz</option>
-                <option value="teslim">Teslim Edildi</option>
-                <option value="noTeslim">Teslim Edilmedi</option>
-            </select>
-        </div>
-
-        <div id="altDurumBilgisiGorevli1" style="display: none;">
-            <label for="altDurumBilgisiGorevli2">Görevli Durumu</label>
-            <select id="altDurumBilgisiGorevli2" name="altDurumBilgisiGorevli2">
-                <option value="" disabled selected>Görevli Durumunu Seçiniz</option>
-                <option value="teslim">Teslim Edildi</option>
-                <option value="noTeslim">Teslim Edilmedi</option>
-            </select>
-        </div>
-    <!-- ********************************************************************* -->  
-
-
-        <label for="saat">Saat:</label>
-        <div id="saatSecici">
-            <input type="number" id="saatSaat" name="saatSaat"min="0" max="23" placeholder="Saat" required>
-            <input type="number" id="saatDakika" name="saatDakika" min="0" max="59" placeholder="Dakika" required>
-        </div>
-
-        <!-- ********************************************************************* -->
-
-        <label for="adet">Adet:</label>
-        <input type="number" id="adet" name="adet" min="0" max="999999" placeholder="Adet Sayısı" required>
-
-        <!-- ********************************************************************* -->
-
-        <label for="resim">Resim Seçin:</label>
-        <input type="file" id="resim" name="resim" accept="image/*" required><br><br>
-
-        <input type="hidden" name="kullaniciID" value="<?php echo isset($_SESSION['kullaniciID']) ? $_SESSION['kullaniciID'] : ''; ?>">
-
-        <!-- ********************************************************************* -->
-
-        <input type="submit" value="Gönder">
-    </form>
-
-    <script>
-        // Saat seçiciyi oluşturan JavaScript kodu
-        const saatSecici = document.getElementById("saatSecici");
-        const saatSaat = document.getElementById("saatSaat");
-        const saatDakika = document.getElementById("saatDakika");
-
-        saatSecici.style.display = "flex";
-
-        saatSaat.addEventListener("input", () => {
-            if (saatSaat.value.length > 2) {
-                saatSaat.value = saatSaat.value.slice(0, 2);
+            const damacanaSelect = document.getElementById("damacanaSelect");
+            const damacanaInput = document.getElementById("damacanaInput");
+            const successAlert = document.getElementById("successAlert");
+        
+            const radio3 = document.getElementById('radio3');
+            const radio1 = document.getElementById('radio1');
+            const radio2 = document.getElementById('radio2');
+            const secilenDegerIkramlikTeslim = document.getElementById('secilenDegerIkramlikTeslim');
+            const secilenDegerIkramlikBitti = document.getElementById('secilenDegerIkramlikBitti');
+            const secilenDegerCayBitti = document.getElementById('secilenDegerCayBitti');
+            const secilenDegerKahveBitti = document.getElementById('secilenDegerKahveBitti');
+            const secilenDegerSogukBitti = document.getElementById('secilenDegerSogukBitti');
+            const radioCay1 = document.getElementById('radioCay1');
+            const radioCay2 = document.getElementById('radioCay2');
+            const radioKahve1 = document.getElementById('radioKahve1');
+            const radioKahve2 = document.getElementById('radioKahve2');
+            const radioSoguk1 = document.getElementById('radioSoguk1');
+            const radioSoguk2 = document.getElementById('radioSoguk2');
+            
+        
+            radio3.addEventListener('change', function() {
+                secilenDegerIkramlikTeslim.style.display = this.checked ? 'block' : 'none';
+                secilenDegerIkramlikBitti.style.display = 'none';
+            });
+        
+            radio1.addEventListener('change', function() {
+                if (this.checked) {
+                secilenDegerIkramlikTeslim.style.display = 'none';
+                secilenDegerIkramlikBitti.style.display = 'none';
+        
+                }
+            });
+        
+            radio2.addEventListener('change', function() {
+                if (this.checked) {
+                secilenDegerIkramlikTeslim.style.display = 'none';
+                secilenDegerIkramlikBitti.style.display = this.checked ? 'block' : 'none';
+                }
+            });
+        
+        
+        
+            radioCay1.addEventListener('change', function() {
+                if (this.checked) {
+                    secilenDegerCayBitti.style.display = 'none';
+                }
+            });
+        
+            radioCay2.addEventListener('change', function() {
+                if (this.checked) {
+                    secilenDegerCayBitti.style.display = this.checked ? 'block' : 'none';
+                }
+            });
+        
+        
+        
+            radioKahve1.addEventListener('change', function() {
+                if (this.checked) {
+                    secilenDegerKahveBitti.style.display = 'none';
+                }
+            });
+        
+            radioKahve2.addEventListener('change', function() {
+                if (this.checked) {
+                    secilenDegerKahveBitti.style.display = this.checked ? 'block' : 'none';
+                }
+            });
+        
+        
+            radioSoguk1.addEventListener('change', function() {
+                if (this.checked) {
+                    secilenDegerSogukBitti.style.display = 'none';
+                }
+            });
+        
+            radioSoguk2.addEventListener('change', function() {
+                if (this.checked) {
+                    secilenDegerSogukBitti.style.display = this.checked ? 'block' : 'none';
+                }
+            });
+        
+        
+        
+            // radio2.addEventListener('change', function() {
+            //     secilenDegerDiv.style.display = this.checked ? 'none';
+            // });
+        
+            
+            // form1 ve form2 deki inputlar degistiginde checkForms calısır ve form3 u aktıf eder
+            form1.addEventListener("input", function() {
+                checkForms();
+            });
+        
+            form2.addEventListener("input", function() {
+                checkForms();
+            });
+        
+            // Form 2'de dosya seçildiğinde
+            form3.addEventListener("change", function() {
+                if (this.querySelector('input[type="file"]').files.length > 0) {
+                    form4.style.display = "block";
+                }
+            });
+        
+            form4.addEventListener("change", function() {
+                if (this.querySelector('input[type="file"]').files.length > 0) {
+                    gonderButton.disabled = false;
+                }
+            });
+        
+            gonderButton.addEventListener("click", function() {
+                document.getElementById('successAlert').style.display = 'block';
+            });
+        
+            // gonderButton.addEventListener('click', function() {
+            //     const saat = document.querySelector('#form1 input[name="saat"]').value;
+            //     const yerBilgisi = document.querySelector('#form2 select[name="yerBilgisi"]').value;
+            //     const damacanaBilgisi = document.querySelector('#form3 select[name="damacanaBilgisi"]').value;
+            //     const adetGirDamacana = document.querySelector('#form3 input[placeholder="Adet gir"]').value;
+            //     const doluDamacana = document.querySelector('#form3 input[placeholder="Dolu damacana sayısı"]').value;
+            //     const bosDamacana = document.querySelector('#form3 input[placeholder="Boş damacana sayısı"]').value;
+            //     const yemekBilgisi = document.querySelector('#form4 select[name="yemekBilgisi"]').value;
+            //     const adetGirYemek = document.querySelector('#form4 input[placeholder="Adet gir"]').value;
+            //     const garsonSayisi = document.querySelector('#form5 input[placeholder="Garson sayısı gir"]').value;
+        
+            //     console.log("Saat: " + saat);
+            //     console.log("Yer Bilgisi: " + yerBilgisi);
+            //     console.log("Damacana Bilgisi: " + damacanaBilgisi);
+            //     console.log("Adet Gir (Damacana): " + adetGirDamacana);
+            //     console.log("Dolu Damacana: " + doluDamacana);
+            //     console.log("Boş Damacana: " + bosDamacana);
+            //     console.log("Yemek Bilgisi: " + yemekBilgisi);
+            //     console.log("Adet Gir (Yemek): " + adetGirYemek);
+            //     console.log("Garson Sayısı: " + garsonSayisi);
+            //     document.getElementById('successAlert').style.display = 'block';
+            //     // buraya verı akısıyle ılgılı kodlar yazılcaka
+            // });
+        
+            // const fs = require('fs');
+            // const dosyaYolu = 'saatBilgisi.txt'; // Oluşturulacak dosyanın yolu
+        
+            // fs.writeFile(dosyaYolu, saat, yerBilgisi, damacanaBilgisi, adetGirDamacana, doluDamacana, bosDamacana, yemekBilgisi, adetGirYemek, garsonSayisi,  (hata) => {
+            //     if (hata) throw hata;
+            //     console.log('Dosya oluşturuldu ve veri kaydedildi!');
+            // });
+        
+        
+            // sorun var butonuna basıldıgında sorun yazmak ıcın text kutusu acılır
+            sendButton.addEventListener('click', function() {
+                document.getElementById('hiddenContent').classList.remove('d-none');
+            });
+            
+            // kriz bilgisini alır ve kriz içerigini yeniden görünmez yapar
+            sendButton.addEventListener('click', function() {
+                // Burada yazılan mesajı alabilirsiniz
+                var message = document.getElementById('textBox').value;
+                console.log('Gönderilen Mesaj:', message);
+                // İleti gönderildikten sonra gizleme veya başka bir işlem yapma burada gerçekleştirilebilir
+                document.getElementById('hiddenContent').classList.add('d-none');
+                document.querySelectorAll('.btn-group .btn').forEach(function(button) {
+                    button.classList.add('d-none'); });
+                document.getElementById('krizAlert').style.display = 'block';
+        
+            });
+        
+        
+            // checkbox ta kutu secildiyse bu bilgi ile baska bir sey yapmak icin
+            // document.querySelector('input[placeholder="Boş Damacana Adedi"]').addEventListener("input", function() {
+            //     const nextElement = this.nextElementSibling;
+            //     if (this.value.trim() !== "") {
+            //         nextElement.style.display = "block";
+            //     } else {
+            //         nextElement.style.display = "none";
+            //     }
+            // });
+        
+            
+            // form1 ve form2 deki inputlar degistiginde checkForms calısır ve form3 u aktıf eder
+            function checkForms() {
+                const validForm1 = checkForm1();
+                const validForm2 = checkForm2();
+        
+                if (validForm1 && validForm2 && form2.querySelector('select[name="yerBilgisi"]').value !== "alanSecimi") {
+                    form3.style.display = "block";
+                } else {
+                    form3.style.display = "none";
+                }
             }
+        
+            function checkForm1() {
+                // form1'in geçerli olup olmadığını kontrol et
+                return form1.querySelector('input[name="saat"]').value.trim() !== "";
+            }
+        
+            function checkForm2() {
+                // form2'nin geçerli olup olmadığını kontrol et
+                return form2.querySelector('select[name="yerBilgisi"]').value !== "alanSecimi";
+            }
+            
         });
-
-        saatDakika.addEventListener("input", () => {
-            if (saatDakika.value.length > 2) {
-                saatDakika.value = saatDakika.value.slice(0, 2);
-            }
-        });
-    </script>
-
-    <script>
-        const adet = document.getElementById("adet");
-
         
-
-        adet.addEventListener("input", () => {
-            if (adet.value.length > 6) {
-                adet.value = adet.value.slice(0, 6);
-            }
-        });  
-    </script>
-
-<script>
-    document.getElementById('krizDurumu').addEventListener('change', function () {
-        var altSeceneklerDiv = document.getElementById('altSecenekler');
-        if (this.value === 'var') {
-            altSeceneklerDiv.style.display = 'block';
-        } else {
-            altSeceneklerDiv.style.display = 'none';
-        }
-    });
-</script>
-
-<script>
-    document.getElementById('durumBilgisi').addEventListener('change', function () {
-        var altDurumBilgisiDamacana1Div = document.getElementById('altDurumBilgisiDamacana1');
-        if (this.value === 'damacanaInfo') {
-            altDurumBilgisiDamacana1Div.style.display = 'block';
-        } else {
-            altDurumBilgisiDamacana1Div.style.display = 'none';
-        }
-    });
-
-    document.getElementById('durumBilgisi').addEventListener('change', function () {
-        var altDurumBilgisiYemek1Div = document.getElementById('altDurumBilgisiYemek1');
-        if (this.value === 'yemekInfo') {
-            altDurumBilgisiYemek1Div.style.display = 'block';
-        } else {
-            altDurumBilgisiYemek1Div.style.display = 'none';
-        }
-    });
-
-    document.getElementById('durumBilgisi').addEventListener('change', function () {
-        var altDurumBilgisiGorevli1Div = document.getElementById('altDurumBilgisiGorevli1');
-        if (this.value === 'GorevliInfo') {
-            altDurumBilgisiGorevli1Div.style.display = 'block';
-        } else {
-            altDurumBilgisiGorevli1Div.style.display = 'none';
-        }
-    });
-</script>
-
-<script>
-    document.getElementById('durumBilgisi').addEventListener('change', function () {
-        var altDurumBilgisiDamacana1Div = document.getElementById('altDurumBilgisiDamacana1');
-        var altDurumBilgisiDamacana2Select = document.getElementById('altDurumBilgisiDamacana2');
-
-
-        if (this.value === 'damacanaInfo') {
-            altDurumBilgisiDamacana1Div.style.display = 'block';
-            altDurumBilgisiDamacana2Select.disabled = false;
-
-        } else {
-            altDurumBilgisiDamacana1Div.style.display = 'none';
-            altDurumBilgisiDamacana2Select.disabled = true;
-            
-        }
-    });
-
-    document.getElementById('durumBilgisi').addEventListener('change', function () {
-        var altDurumBilgisiYemek1Div = document.getElementById('altDurumBilgisiYemek1');
-        var altDurumBilgisiYemek2Select = document.getElementById('altDurumBilgisiYemek2');
-
-
-        if (this.value === 'yemekInfo') {
-            altDurumBilgisiYemek1Div.style.display = 'block';
-            altDurumBilgisiYemek2Select.disabled = false;
-
-        } else {
-            altDurumBilgisiYemek1Div.style.display = 'none';
-            altDurumBilgisiYemek2Select.disabled = true;
-            
-        }
-    });
-
-    document.getElementById('durumBilgisi').addEventListener('change', function () {
-        var altDurumBilgisiGorevli1Div = document.getElementById('altDurumBilgisiGorevli1');
-        var altDurumBilgisiGorevli2Select = document.getElementById('altDurumBilgisiGorevli2');
-
-
-        if (this.value === 'gorevliInfo') {
-            altDurumBilgisiGorevli1Div.style.display = 'block';
-            altDurumBilgisiGorevli2Select.disabled = false;
-
-        } else {
-            altDurumBilgisiGorevli1Div.style.display = 'none';
-            altDurumBilgisiGorevli2Select.disabled = true;
-            
-        }
-    });
-</script>
+        
+        // form2.addEventListener("change", function() {
+        //     const selectedOption = this.querySelector('select[name="yerBilgisi"]').value;
+        //     gonderButton.dataset.selectedOption = selectedOption;
+        //     gonderButton.disabled = selectedOption === "alanSecimi";
+        // });
+        
+        // gonderButton.addEventListener("click", function() {
+        //     const selectedOption = this.dataset.selectedOption;
+        //     // Seçilen seçeneği burada kullanabilirsiniz
+        //     console.log("Seçilen seçenek: " + selectedOption);
+        // });
+        </script>
 
 
 
+        <!-- <script src="../../static/script.js"></script> -->
 
-</body>
+
+    </body>
 </html>
