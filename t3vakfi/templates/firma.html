@@ -32,7 +32,7 @@
 
             <!-- ********************************************************************* -->
 
-        <form enctype="multipart/form-data" method="POST" action="veri_kaydet.php">
+        <form enctype="multipart/form-data" method="POST" action="../pages/veri_kaydet.php">
 
             <label for="saat">Saat:</label>
             <ul class="list-group list-group-horizontal">
@@ -43,7 +43,7 @@
             </ul>
 
             <!-- ********************************************************************* -->
-        
+
             <label for="yer">Yer:</label>
             <div class="select-group">
                 <select id="yer" name="yer" required>
@@ -83,7 +83,7 @@
 
             <div id="cateringBilgisi" style="display: none;">
             <h2>Catering Bilgisi:</h2>
-            
+
                 <label for="ikramlikBilgisi">İkramlık</label>
                 <ul class="list-group list-group-horizontal">
                     <ul class="list-group list-group-vertical">
@@ -133,7 +133,7 @@
                         <input type="radio" class="form-check-input" id="radioCay1" name="cayBilgisi" value="Mevcut">Mevcut
                         <label class="form-check-label" for="radioCay1"></label>
                     </div>
-            
+
                     <div class="mx-2"></div>
                     <div class="mx-2"></div>
 
@@ -149,10 +149,10 @@
                         <input type="radio" class="form-check-input" id="radioKahve1" name="kahveBilgisi" value="Mevcut">Mevcut
                         <label class="form-check-label" for="radioKahve1"></label>
                     </div>
-            
+
                     <div class="mx-2"></div>
                     <div class="mx-2"></div>
-                    
+
                     <div class="form-check">
                         <input type="radio" class="form-check-input" id="radioKahve2" name="kahveBilgisi" value="Bitt">Bitti
                         <label class="form-check-label" for="radioKahve2"></label>
@@ -226,15 +226,16 @@
                 <label for="resim">Resim Seçin:</label>
                 <input type="file" id="resim" name="resim[]" accept="image/*" multiple required><br><br>
             </div>
+            <button type="submit" value="Gönder" class="btn btn-primary" id="gonderButton">GÖNDER</button>
 
             <input type="hidden" name="kullaniciID" value="<?php echo isset($_SESSION['kullaniciID']) ? $_SESSION['kullaniciID'] : ''; ?>">
 
             <!-- ********************************************************************* -->
 
             <!-- <input type="submit" value="Gönder"> -->
-            <button type="submit" value="Gönder" class="btn btn-primary" id="gonderButton">GÖNDER</button>
 
-            <div id = successAlert class="alert alert-success alert-dismissible fade show" style="display:none;">
+            
+            <div id ="successAlert" class="alert alert-success alert-dismissible fade show" style="display:none;">
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 <strong>Success!</strong> Girdiğiniz veriler sisteme iletildi.
             </div>
